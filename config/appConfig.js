@@ -30,10 +30,10 @@ global.email_smtp = {
 global.web_set = {
   author: 'Nekell Ganteng',
   ads: {
-    verify: 'gq1dwktwsmwrwp08wpuera',
+    verify: '-',
     ads_area: {
-      banner: '7354caf0-08a9-477d-8bc5-c40e26d435e4',
-      native: '560d1d36-2776-4263-90e1-913c60402f7b'
+      banner: '-',
+      native: '-'
     }
   },
   head: {
