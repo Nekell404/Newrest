@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html :class="{ 'theme-dark': dark }" x-data="data()" lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="<%= web_set.head.description %>">
+  <meta name="author" content="<%= web_set.head.author %>">
+  <meta name="keywords" content="<%= web_set.head.keywords %>">
+  <meta property="og:site_name" content="<%= web_set.head.site_name %>">
+  <meta property="og:title" content="Sign in - <%= web_set.head.title %>">
+  <meta property="og:url" content="<%= web_set.head.domain %>">
+  <meta property="og:image" content="<%= web_set.head.image %>">
+  <meta property="og:image:type" content="<%= web_set.head.image_type %>">
+  <meta property="og:image:alt" content="<%= web_set.head.image_alt %>">
+  <meta property="og:description" content="<%= web_set.head.description %>">
+  <title>Sign in - <%= web_set.head.title %></title>
+  <link rel="shortcut icon" type="image/png" href="<%= web_set.head.favicon %>">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
+  <link rel="stylesheet" href="/assets/css/tailwind.output.css">
+</head>
+
+<body>
+  <div class="flex items-center min-h-screen p-6 bg-gray-50 dark:bg-gray-900">
+    <div class="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl dark:bg-gray-800">
+      <div class="flex flex-col overflow-y-auto md:flex-row">
+        <div class="h-32 md:h-auto md:w-1/2">
+          <img aria-hidden="true" class="object-cover w-full h-full dark:hidden" src="/assets/img/login-office.jpeg" alt="Office">
+          <img aria-hidden="true" class="hidden object-cover w-full h-full dark:block" src="/assets/img/login-office-dark.jpeg" alt="Office">
+        </div>
+        <div class="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
+          <div class="w-full">
+            <h1 class="mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200">
+              Sign in
+            </h1>
+            <form action="/auth/login" method="post">
+              <label class="block text-sm">
+                <span class="text-gray-700 dark:text-gray-300">Username or email address</span>
+                <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" type="text" name="identifier" placeholder="yourusername or your@email.com" minlength="5" maxlength="50" autocapitalize="none" required="">
+              </label>
+              <label class="block mt-4 text-sm relative">
+                <span class="text-gray-700 dark:text-gray-300">Password</span>
+                <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" type="password" name="password" placeholder="********" minlength="8" maxlength="20" required="">
+                <p class="absolute top-0 right-0 mt-0 text-sm font-medium text-gray-700 dark:text-gray-300">
+                  <a href="/auth/forgot-password" class="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline">Forgot password?</a>
+                </p>
+              </label>
+
+              <button class="block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                Sign in
+              </button>
+            </form>
+
+            <p class="mt-8 text-sm font-medium text-gray-700 dark:text-gray-300">
+              Don't have an account?
+              <a href="/auth/signup?source=login" class="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline">
+                Create an account
+              </a>
+            </p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const usernameInput = document.querySelector('input[name="username"]');
+
+    usernameInput.addEventListener('input', () => {
+      const username = usernameInput.value;
+      if (username.includes(' ') || /[A-Z]/.test(username)) {
+        usernameInput.setCustomValidity("Username tidak boleh mengandung spasi atau huruf besar.");
+      } else {
+        usernameInput.setCustomValidity("");
+      }
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+  <script src="/assets/js/init-alpine.js"></script>
+</body>
+
+</html>

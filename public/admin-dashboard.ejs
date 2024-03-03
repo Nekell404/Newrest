@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css">
+  <title>Admin Dashboard</title>
+</head>
+<body>
+  <div class="bg-gray-900 flex flex-col min-h-screen">
+    <!-- Navbar -->
+    <nav class="sticky top-0 left-0 right-0 bg-blue-800 p-4">
+      <div class="container mx-auto flex justify-between items-center">
+        <div class="text-white">
+          <span class="text-xl font-bold">Admin Dashboard</span>
+        </div>
+        <div class="md:flex md:items-center">
+          <a href="/" class="text-white mr-2">Home</a>
+          <a href="/admin/panel?password=<%= password_admin %>" class="text-white">Admin panel</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto pl-4 pr-4 my-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Card 1 -->
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+          <h2 class="text-white text-xl font-bold mb-2">Users</h2>
+          <p class="text-gray-200 text-sm">Total users: 1000</p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+          <h2 class="text-white text-xl font-bold mb-2">Users</h2>
+          <p class="text-gray-200 text-sm">Total users: 1000</p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+          <h2 class="text-white text-xl font-bold mb-2">Users</h2>
+          <p class="text-gray-200 text-sm">Total users: 1000</p>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+          <h2 class="text-white text-xl font-bold mb-2">Revenue</h2>
+          <p class="text-gray-200 text-sm">Rp. 1M</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="/assets/js/admin.js"></script>
+</body>
+</html>

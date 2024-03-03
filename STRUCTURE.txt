@@ -1,0 +1,26 @@
+- RESTful API with full CRUD
+  - node_modules
+  - config/
+    - appConfig.js
+  - utils/
+    - functions.js
+  - routes/
+    - mainRoutes.js
+  - controllers/
+    - mainController.js
+  - models/
+    - mainModel.js
+  - views/
+    - layouts/
+      - index.ejs
+  - public/
+    - css/
+      - styles.css
+    - img/
+      - picture.jpg
+    - js/
+      - main.js
+  - temp/
+    - temporary_file
+  - app.js
+  - package.json

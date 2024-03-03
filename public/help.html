@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">Pusat bantuan</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+  <style>
+  .card {
+    height: 100%;
+    padding: 1rem;
+  }
+  
+  .btn {
+    width: 100%;
+  }
+</style>
+
+</head>
+<body class="bg-gray-100">
+  <div class="container mx-auto p-8">
+    <h1 class="text-3xl font-bold mb-4 text-center" id="help-center-title">Pusat bantuan</h1>
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      
+      <div class="card bg-white rounded-lg shadow-lg p-4">
+        <h2 class="text-xl font-semibold mb-2" id="api-card-title">Bagaimana cara menggunakan fitur API?</h2>
+        <p class="text-gray-600" id="api-description">Silahkan lihat dokumentasi API.</p>
+        <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mt-4 transition duration-300 ease-in-out transform hover:scale-105 btn" id="api-button">
+          Pergi ke: Dokumentasi API
+        </button>
+      </div>
+      
+      <div class="card bg-white rounded-lg shadow-lg p-4">
+        <h2 class="text-xl font-semibold mb-2" id="error-card-title">Bagaimana jika ada kesalahan di fitur API?</h2>
+        <p class="text-gray-600" id="error-description">Silahkan laporkan ke dukungan teknis.</p>
+        <button onclick="location.href = '/contact-support';" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mt-4 transition duration-300 ease-in-out transform hover:scale-105 btn" id="error-button">
+          Pergi ke: Dukungan Teknis
+        </button>
+      </div>
+      
+      <div class="card bg-white rounded-lg shadow-lg p-4">
+        <h2 class="text-xl font-semibold mb-2" id="change-key-card-title">Bagaimana cara mengubah kunci API saya?</h2>
+        <p class="text-gray-600" id="change-key-description">Silahkan pergi ke halaman profil.</p>
+        <button onclick="location.href = '/profile';" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mt-4 transition duration-300 ease-in-out transform hover:scale-105 btn" id="change-key-button">
+          Pergi ke: Halaman Profil
+        </button>
+      </div>
+    
+    </div>
+    
+  </div>
+  
+  <script>
+    const userLang = navigator.language || navigator.userLanguage;
+    
+    function setLanguage(lang) {
+      const translations = {
+        en: {
+          'page-title': 'Help Center',
+          'help-center-title': 'Help Center',
+          'api-card-title': 'How to use the API features?',
+          'api-description': 'Please see the API documentation.',
+          'api-button': 'Go to API Documentation',
+          'error-card-title': 'What if there is an error in the API feature?',
+          'error-description': 'Please report it to technical support.',
+          'error-button': 'Go to Technical Support',
+          'change-key-card-title': 'How to change my API key?',
+          'change-key-description': 'Please go to the profile page.',
+          'change-key-button': 'Go to Pages Profile'
+        },
+        id: {
+          'page-title': 'Pusat Bantuan',
+          'help-center-title': 'Pusat Bantuan',
+          'api-card-title': 'Bagaimana cara menggunakan fitur API?',
+          'api-description': 'Silahkan lihat dokumentasi API.',
+          'api-button': 'Pergi ke: Dokumentasi API',
+          'error-card-title': 'Bagaimana jika ada kesalahan di fitur API?',
+          'error-description': 'Silahkan laporkan ke dukungan teknis.',
+          'error-button': 'Pergi ke: Dukungan Teknis',
+          'change-key-card-title': 'Bagaimana cara mengubah kunci API saya?',
+          'change-key-description': 'Silahkan pergi ke halaman profil.',
+          'change-key-button': 'Pergi ke: Halaman Profil'
+        }
+      };
+
+      const elementsToTranslate = ['page-title', 'help-center-title', 'api-card-title', 'api-description', 'api-button', 'error-card-title', 'error-description', 'error-button', 'change-key-card-title', 'change-key-description', 'change-key-button'];
+
+      elementsToTranslate.forEach(elementId => {
+        document.getElementById(elementId).textContent = translations[lang][elementId];
+      });
+    }
+
+    if (userLang.startsWith('id')) {
+      setLanguage('id');
+    } else {
+      setLanguage('en');
+    }
+  </script>
+</body>
+</html>

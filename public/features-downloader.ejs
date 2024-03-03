@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html :class="{ 'theme-dark': dark }" x-data="data()" lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="<%= web_set.head.description %>">
+  <meta name="author" content="<%= web_set.head.author %>">
+  <meta name="keywords" content="<%= web_set.head.keywords %>">
+  <meta property="og:site_name" content="<%= web_set.head.site_name %>">
+  <meta property="og:title" content="Downloader - <%= web_set.head.title %>">
+  <meta property="og:url" content="<%= web_set.head.domain %>">
+  <meta property="og:image" content="<%= web_set.head.image %>">
+  <meta property="og:image:type" content="<%= web_set.head.image_type %>">
+  <meta property="og:image:alt" content="<%= web_set.head.image_alt %>">
+  <meta property="og:description" content="<%= web_set.head.description %>">
+  <title>Downloader - <%= web_set.head.title %></title>
+  <link rel="shortcut icon" type="image/png" href="<%= web_set.head.favicon %>">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.Tryogleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css">
+  <link rel="stylesheet" href="/assets/css/tailwind.output.css">
+  <link rel="stylesheet" href="/assets/css/table.css">
+  
+  <!- Mondiad area ->
+  <meta name="mnd-ver" content="<%= web_set.ads.verify %>" />
+  <script async src="https://ss.mndsrv.com/banner.js"></script>
+  <script async src="https://ss.mndsrv.com/native.js"></script>
+</head>
+
+<body class="overflow-y-auto p-4 bg-gray-100 text-dark dark:bg-gray-900 dark:text-white">
+  <div class="flex h-screen">
+    <div class="container mx-auto">
+      
+      <% if (advertising_for_free_users) { %>
+        <% if (user.account_type === "Free") { %>
+          <div align="center" style="margin-top: 7rem; margin-bottom: 2rem;">
+            <div data-mndazid="<%= web_set.ads.ads_area.native %>"></div>
+          </div>
+        <% } else { %>
+          <div style="margin-bottom: 7rem;"></div>
+        <% } %>
+      <% } %>
+      
+      <div class="nav bg-gray-50 text-dark dark:bg-gray-900 dark:text-white">
+      <div class="flex justify-between items-center mb-4">
+        <h1 class="text-lg font-bold text-gray-900 dark:text-white"><a href="/dashboard" class="mr-2">&LeftArrow;</a> Downloader Features</h1>
+        <button class="rounded-md focus:outline-none focus:shadow-outline-purple" @click="toggleTheme" aria-label="Toggle color mode">
+          <template x-if="!dark">
+            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+          </template>
+          <template x-if="dark">
+            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+            </svg>
+          </template>
+        </button>
+      </div>
+
+      <div class="mb-4">
+        <div class="relative">
+          <i class="fas fa-search absolute top-3 left-3 text-gray-400"></i>
+          <input type="search" id="searchInput" placeholder="Search..."
+          class="w-full pl-10 pr-4 py-2 rounded-lg border focus:outline-none focus:ring focus:border-blue-300 dark:bg-gray-700 dark:text-white"
+          onkeyup="searchData()">
+        </div>
+      </div>
+      </div>
+      
+      <div class="overflow-x-auto">
+        <table id="dataTable" class="min-w-full table-fixed rounded-lg mb-6 bg-white text-gray-900 dark:bg-gray-800 dark:text-white">
+          <thead>
+            <tr>
+              <th class="px-6 py-3 border-b-2 border-gray-300 dark:border-gray-600 text-left text-sm leading-4 tracking-wider">
+                Name <i class="sort-icon fas fa-sort"></i>
+              </th>
+              <th class="px-6 py-3 border-b-2 border-gray-300 dark:border-gray-600 text-left text-sm leading-4 tracking-wider">
+                Description <i class="sort-icon fas fa-sort"></i>
+              </th>
+              <th class="px-6 py-3 border-b-2 border-gray-300 dark:border-gray-600 text-left text-sm leading-4 tracking-wider">
+                Method <i class="sort-icon fas fa-sort"></i>
+              </th>
+              <th class="px-6 py-3 border-b-2 border-gray-300 dark:border-gray-600 text-left text-sm leading-4 tracking-wider">
+                Type <i class="sort-icon fas fa-sort"></i>
+              </th>
+              <th class="px-6 py-3 border-b-2 border-gray-300 dark:border-gray-600 text-left text-sm leading-4 tracking-wider">
+                Query Parameters <i class="sort-icon fas fa-sort"></i>
+              </th>
+              <th class="px-6 py-3 border-b-2 border-gray-300 dark:border-gray-600 text-left text-sm leading-4 tracking-wider">
+                Status <i class="sort-icon fas fa-sort"></i>
+              </th>
+              <th class="px-6 py-3 border-b-2 border-gray-300 dark:border-gray-600 text-left text-sm leading-4 tracking-wider">
+                Action <i class="sort-icon fas fa-sort"></i>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                YouTube video
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                JSON
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                video_url, api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button
+                    onclick="location.href = '/api/downloader/youtube-video?api_key=<%= user.api_key %>&video_url=https://youtu.be/rKt_RuVmBkA';"
+                    class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                YouTube video server 2
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                JSON
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                video_url, api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button
+                    onclick="location.href = '/api/downloader/youtube-video-v2?api_key=<%= user.api_key %>&video_url=https://youtu.be/rKt_RuVmBkA';"
+                    class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                YouTube audio
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                JSON
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                video_url, api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button
+                    onclick="location.href = '/api/downloader/youtube-audio?api_key=<%= user.api_key %>&video_url=https://youtu.be/rKt_RuVmBkA';"
+                    class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                YouTube play video
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                JSON
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                video_title, api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button
+                    onclick="location.href = '/api/downloader/youtube-play-video?api_key=<%= user.api_key %>&video_title=How to make a login form';"
+                    class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                YouTube play audio
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                JSON
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                video_title, api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button
+                    onclick="location.href = '/api/downloader/youtube-play-audio?api_key=<%= user.api_key %>&video_title=Dj 30 detik';"
+                    class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Facebook video
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                JSON
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                video_url, api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button
+                    onclick="location.href = '/api/downloader/facebook-video?api_key=<%= user.api_key %>&video_url=https://www.facebook.com/100084303604875/posts/273374255482693/?mibextid=rS40aB7S9Ucbxw6v';"
+                    class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Facebook video server 2
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                JSON
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                video_url, api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button
+                    onclick="location.href = '/api/downloader/facebook-video-v2?api_key=<%= user.api_key %>&video_url=https://www.facebook.com/100084303604875/posts/273374255482693/?mibextid=rS40aB7S9Ucbxw6v';"
+                    class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Twitter (Image, Video)
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                JSON
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                target_url, api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button
+                    onclick="location.href = '/api/downloader/twitter?api_key=<%= user.api_key %>&target_url=https://twitter.com/IbaiLlanos/status/1569798267365457920';"
+                    class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Twitter (Image, Video) server 2
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                JSON
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                target_url, api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button
+                    onclick="location.href = '/api/downloader/twitter-v2?api_key=<%= user.api_key %>&target_url=https://twitter.com/IbaiLlanos/status/1569798267365457920';"
+                    class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Instagram (Image, Video, Reels)
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                JSON
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                target_url, api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button
+                    onclick="location.href = '/api/downloader/instagram?api_key=<%= user.api_key %>&target_url=https://www.instagram.com/p/CNtpwxuH5NK/?igshid=g26k5coikzwr';"
+                    class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Instagram (Image, Video, Reels) server 2
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                JSON
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                target_url, api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button
+                    onclick="location.href = '/api/downloader/instagram-v2?api_key=<%= user.api_key %>&target_url=https://www.instagram.com/p/CNtpwxuH5NK/?igshid=g26k5coikzwr';"
+                    class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                TikTok
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                JSON
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                video_url, api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button
+                    onclick="location.href = '/api/downloader/tiktok?api_key=<%= user.api_key %>&video_url=https://vm.tiktok.com/ZSLKtU8An';"
+                    class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                TikTok server 2
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                JSON
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                video_url, api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button
+                    onclick="location.href = '/api/downloader/tiktok-v2?api_key=<%= user.api_key %>&video_url=https://vm.tiktok.com/ZSLKtU8An';"
+                    class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                TikTok server 3
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                JSON
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                video_url, api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button
+                    onclick="location.href = '/api/downloader/tiktok-v3?api_key=<%= user.api_key %>&video_url=https://vm.tiktok.com/ZSLKtU8An';"
+                    class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Savefrom
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                JSON
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                target_url, api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button
+                    onclick="location.href = '/api/downloader/savefrom?api_key=<%= user.api_key %>&target_url=';"
+                    class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Mediafire
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                JSON
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                file_url, api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button
+                    onclick="location.href = '/api/downloader/mediafire?api_key=<%= user.api_key %>&file_url=';"
+                    class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Sfilemobi
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                JSON
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                file_url, api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button
+                    onclick="location.href = '/api/downloader/sfilemobi?api_key=<%= user.api_key %>&file_url=';"
+                    class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                SoundCloud
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                JSON
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                audio_url, api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button
+                    onclick="location.href = '/api/downloader/soundcloud?api_key=<%= user.api_key %>&audio_url=';"
+                    class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Google drive
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                JSON
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                file_url, api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button
+                    onclick="location.href = '/api/downloader/google-drive?api_key=<%= user.api_key %>&file_url=https://drive.google.com/file/d/11xgPLTvOPsjMbH48tBbvDN0gGyWmnUGD/view';"
+                    class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
+      <p id="notFoundMessage" class="text-red-500 mt-2 hidden">
+        Not found.
+      </p>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
+  <script src="/assets/js/init-alpine.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/table.js"></script>
+</body>
+
+</html>

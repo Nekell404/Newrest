@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">Technical Support</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-8">
+  <div class="max-w-xl mx-auto">
+    <h1 class="text-3xl font-bold mb-4" id="help-center-title">Dukungan Teknis</h1>
+    
+    <div class="bg-white rounded-lg shadow-lg p-4">
+      <h2 class="text-xl font-semibold mb-2" id="contact-title">Cara Menghubungi Dukungan Teknis</h2>
+      <p class="text-gray-600" id="contact-description">Jika Anda mengalami masalah teknis dengan layanan kami, kami siap membantu Anda. Silakan hubungi kami melalui salah satu cara berikut:</p>
+      <ul class="list-disc pl-6 mt-2">
+        <li id="contact-email">Email: <%= web_set.body.contact_support.email %></li>
+        <li id="contact-phone">Nomor Telepon: <%= web_set.body.contact_support.phone_number %></li>
+        <li id="contact-live-chat">Live chat: <%= web_set.body.contact_support.live_chat %></li>
+      </ul>
+    </div>
+  </div>
+  
+  <script>
+    const userLang = navigator.language || navigator.userLanguage;
+    
+    function setLanguage(lang) {
+      const translations = {
+        en: {
+          'page-title': 'Technical Support',
+          'help-center-title': 'Technical Support',
+          'contact-title': 'How to Contact Technical Support',
+          'contact-description': 'If you are experiencing technical issues with our service, we are ready to assist you. Please contact us through one of the following methods:',
+          'contact-email': 'Email: <%= web_set.body.contact_support.email %>',
+          'contact-phone': 'Phone Number: <%= web_set.body.contact_support.phone_number %>',
+          'contact-live-chat': 'Live chat: <%= web_set.body.contact_support.live_chat %>'
+        },
+        id: {
+          'page-title': 'Dukungan Teknis',
+          'help-center-title': 'Dukungan Teknis',
+          'contact-title': 'Cara Menghubungi Dukungan Teknis',
+          'contact-description': 'Jika Anda mengalami masalah teknis dengan layanan kami, kami siap membantu Anda. Silakan hubungi kami melalui salah satu cara berikut:',
+          'contact-email': 'Email: <%= web_set.body.contact_support.email %>',
+          'contact-phone': 'Nomor Telepon: <%= web_set.body.contact_support.phone_number %>',
+          'contact-live-chat': 'Live chat: <%= web_set.body.contact_support.live_chat %>'
+        }
+      };
+
+      const elementsToTranslate = ['page-title', 'help-center-title', 'contact-title', 'contact-description', 'contact-email', 'contact-phone', 'contact-live-chat'];
+
+      elementsToTranslate.forEach(elementId => {
+        document.getElementById(elementId).textContent = translations[lang][elementId];
+      });
+    }
+
+    if (userLang.startsWith('id')) {
+      setLanguage('id');
+    } else {
+      setLanguage('en');
+    }
+  </script>
+</body>
+</html>

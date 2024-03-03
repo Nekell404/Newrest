@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment methods</title>
+  <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^2.2.19/dist/tailwind.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" crossorigin="anonymous">
+  <style>
+    @keyframes blink {
+      0% { color: yellow; }
+      50% { color: transparent; }
+      100% { color: yellow; }
+    }
+
+    .text-yellow-400 {
+      animation: blink 1s infinite;
+    }
+
+    .details p {
+      margin: 0;
+    }
+
+    .payment-method p {
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+<body class="bg-gray-900 text-white p-4">
+  <div class="flex flex-col">
+    <h4 class="text-2xl font-semibold">Details</h4>   
+    <div class="details">
+      <p>Plan: <%= plan %></p>
+      <p>Plan expiration period: <%= expired_plan_date %></p>
+      <p>Name: <%= name %></p>
+      <p>Email: <%= email %></p>
+      <p>Payment method: <%= payment_method %></p>
+      <p>Total price: <%= total_price %></p>
+    </div>
+
+    <h4 class="text-2xl font-semibold mt-4">Payment method</h4>   
+    <div class="payment-method">
+      <% if (payment_method === "QRIS") { %>
+        <div>
+        <h1 class="text-lg font-semibold mb-1">QRIS All Payment</h1>
+          <img src="<%= web_set.body.plan.payment_method.qris.image_url %>" alt="QRIS" style="aspect-ratio: 1/1; width: 300px; height: auto; margin-bottom: 4px;">
+          <a class="text-blue-400 font-semibold" href="<%= web_set.body.plan.payment_method.qris.image_url %>" download><i class="fas fa-download"></i> Download QR code</a>
+          <p class="text-lg mt-1">Scan this QR code to make a payment.</p>
+      </div>
+      
+      <div>
+      <p class="text-yellow-400 text-lg mb-6">Jangan lupa screenshot bukti transfer.</p>
+      <p class="text-lg font-semibold mt-2">Kirim bukti transfer ke:</p>
+      <p class="text-lg">
+        Email: <a class="text-blue-400" href="mailto:<%= web_set.body.contact_support.email %>"><%= web_set.body.contact_support.email %></a>
+        <br>WhatsApp: <a class="text-blue-400" href="https://wa.me/<%= web_set.body.contact_support.phone_number %>"><%= web_set.body.contact_support.phone_number %></a> (<%= web_set.author %>)
+      </p>
+    </div>
+    <% } else if (payment_method === "DANA") { %>
+      <div>
+        <h1 class="text-lg font-semibold mb-1">DANA</h1>
+          <img src="<%= web_set.body.plan.payment_method.dana.image_url %>" alt="DANA" style="aspect-ratio: 1/1; width: 300px; height: auto; margin-bottom: 4px;">
+          <a class="text-blue-400 font-semibold" href="<%= web_set.body.plan.payment_method.dana.image_url %>" download><i class="fas fa-download"></i> Download QR code</a>
+          <p class="text-lg mt-1">Scan this QR code to make a payment.</p>
+      </div>
+      
+      <div>
+      <p class="text-yellow-400 text-lg mb-6">Jangan lupa screenshot bukti transfer.</p>
+      <p class="text-lg font-semibold mt-2">Kirim bukti transfer ke:</p>
+      <p class="text-lg">
+        Email: <a class="text-blue-400" href="mailto:<%= web_set.body.contact_support.email %>"><%= web_set.body.contact_support.email %></a>
+        <br>WhatsApp: <a class="text-blue-400" href="https://wa.me/<%= web_set.body.contact_support.phone_number %>"><%= web_set.body.contact_support.phone_number %></a> (<%= web_set.author %>)
+      </p>
+    </div>
+    <% } else if (payment_method === "GoPay") { %>
+      <div>
+        <h1 class="text-lg font-semibold mb-1">GoPay</h1>
+          <img src="<%= web_set.body.plan.payment_method.gopay.image_url %>" alt="GoPay" style="aspect-ratio: 1/1; width: 300px; height: auto; margin-bottom: 4px;">
+          <a class="text-blue-400 font-semibold" href="<%= web_set.body.plan.payment_method.gopay.image_url %>" download><i class="fas fa-download"></i> Download QR code</a>
+          <p class="text-lg mt-1">Scan this QR code to make a payment.</p>
+      </div>
+      
+      <div>
+      <p class="text-yellow-400 text-lg mb-6">Jangan lupa screenshot bukti transfer.</p>
+      <p class="text-lg font-semibold mt-2">Kirim bukti transfer ke:</p>
+      <p class="text-lg">
+        Email: <a class="text-blue-400" href="mailto:<%= web_set.body.contact_support.email %>"><%= web_set.body.contact_support.email %></a>
+        <br>WhatsApp: <a class="text-blue-400" href="https://wa.me/<%= web_set.body.contact_support.phone_number %>"><%= web_set.body.contact_support.phone_number %></a> (<%= web_set.author %>)
+      </p>
+    </div>
+    <% } else { %>
+      <h1 class="text-1xl font-awesome"><%= payment_method %> not found!</h1>
+    <% } %>
+    </div>
+  </div>
+</body>
+</html>

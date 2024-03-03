@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="keywords" content="layanan API, solusi API kustom, RESTful API, bot WhatsApp, integrasi teknologi, interaksi pengguna, kinerja tinggi, fleksibilitas API, keandalan API, pengembangan aplikasi">
+  <meta name="description" content="<%= web_set.head.description %>">
+  <meta name="author" content="<%= web_set.head.author %>">
+  <meta name="keywords" content="<%= web_set.head.keywords %>">
+  <meta property="og:site_name" content="<%= web_set.head.site_name %>">
+  <meta property="og:title" content="<%= web_set.head.title %>">
+  <meta property="og:url" content="<%= web_set.head.domain %>">
+  <meta property="og:image" content="<%= web_set.head.image %>">
+  <meta property="og:image:type" content="<%= web_set.head.image_type %>">
+  <meta property="og:image:alt" content="<%= web_set.head.image_alt %>">
+  <meta property="og:description" content="<%= web_set.head.description %>">
+  <title><%= web_set.head.title %></title>
+  <link rel="shortcut icon" type="image/png" href="<%= web_set.head.favicon %>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500&family=Jost:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="/assets/home/lib/animate/animate.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/home/lib/owlcarousel/assets/owl.carousel.min.css">
+  <link rel="stylesheet" href="/assets/home/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/home/css/styles.css">
+  <link rel="stylesheet" href="/assets/home/css/responsive.css">
+</head>
+
+<body data-bs-spy="scroll" data-bs-target=".navbar" data-bs-offset="51">
+  <div class="container-xxl p-0">
+    <header>
+      <nav class="navbar navbar-expand-lg px-4 px-lg-5 py-3 py-lg-0">
+        <a href="#" class="navbar-brand p-0">
+          <h1 class="text-white m-0"><%= web_set.body.header.name %></h1>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+          <span class="text-white fa fa-bars"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <div class="navbar-nav mx-auto py-0">
+            <a href="#home" class="nav-item nav-link active">Home</a>
+            <a href="#about" class="nav-item nav-link">About</a>
+            <a href="#feature" class="nav-item nav-link">Feature</a>
+            <a href="#plan" class="nav-item nav-link">Plans & Pricing</a>
+            <a href="#contact" class="nav-item nav-link">Contact</a>
+            <a href="/help" class="nav-item nav-link">Help</a>
+            <a href="/auth/login" class="nav-item nav-link">Sign in</a>
+          </div>
+          <a href="#plan" class="btn btn-get-started bg-dark text-white rounded-pill py-1 px-4 ms-3 d-none d-lg-block">Sign up</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="bg-dark text-white">
+
+      <section id="home">
+        <div class="container-xxl position-relative p-0">
+          <div class="container-xxl bg-primary-gradient hero-header">
+            <div class="container px-lg-5">
+              <div class="row">
+                <div class="col-lg-8 text-center text-lg-start">
+                  <h1 class="text-white mb-4 animated slideInDown">Selamat datang di platform kami yang inovatif untuk layanan API!</h1>
+                  <p class="text-white pb-3 animated slideInDown">Kami menyediakan beragam solusi API terpercaya, dari layanan RESTful API kuat hingga integrasi dengan bot WhatsApp interaktif. Fokus kami adalah pada kehandalan, kinerja, dan fleksibilitas, membantu Anda mencapai tujuan teknologi dengan solusi API sesuai kebutuhan. Bergabunglah dengan kami untuk maksimalkan potensi teknologi melalui layanan API terbaik.</p>
+                  <a href="#about" class="btn bg-dark text-white py-sm-3 px-4 px-sm-5 rounded-pill me-3 animated slideInLeft">About</a>
+                  <a href="#plan" class="btn bg-dark text-white py-sm-3 px-4 px-sm-5 rounded-pill animated slideInRight">Get Started</a>
+                </div>
+                <div class="col-lg-4 d-flex justify-content-center justify-content-lg-end wow fadeInUp" data-wow-delay="0.3s">
+                  <div :class="owl-carousel screenshot-carousel">
+                    <img class="img-fluid hero-image" src="/assets/home/img/hero-1.png" alt="">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="about">
+        <div class="container-xxl py-5">
+          <div class="container py-5 px-lg-5">
+            <div class="row g-5 align-items-center">
+              <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+                <h5 class="text-primary-gradient fw-medium">About Us</h5>
+                <h1 class="text-white mb-4">#1 API provider in Indonesia</h1>
+                <p class="text-gray mb-4"><%= web_set.body.header.name %> adalah mitra terpercaya yang menyediakan solusi API inovatif, dari layanan RESTful hingga integrasi interaktif dengan bot WhatsApp. Prioritas kami adalah kehandalan, kinerja, dan fleksibilitas. Bergabunglah dalam perjalanan teknologi kami untuk meraih potensi penuh teknologi Anda melalui layanan API terbaik yang dapat disesuaikan.</p>
+                <div class="row g-4 mb-4">
+                  <div class="col-sm-6 wow fadeIn" data-wow-delay="0.5s">
+                    <div class="d-flex">
+                      <i class="fa fa-users fa-2x text-primary-gradient flex-shrink-0 mt-1"></i>
+                      <div class="ms-3">
+                        <h2 id="totalUsersCount" class="text-white mb-0" data-toggle="counter-up"><%= userCount %></h2>
+                        <p class="text-primary-gradient mb-0">Active users</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 wow fadeIn" data-wow-delay="0.7s">
+                    <div class="d-flex">
+                      <i class="fa fa-fw fa-server fa-2x text-secondary-gradient flex-shrink-0 mt-1"></i>
+                      <div class="ms-3">
+                        <h2 id="totalRequestsCount" class="text-white mb-0" data-toggle="counter-up"><%= totalRequestsCount %></h2>
+                        <p class="text-secondary-gradient mb-0">Total API requests</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <a href="#feature" class="btn btn-primary-gradient py-sm-3 px-4 px-sm-5 rounded-pill mt-3" style="margin-right: 10px;">Feature</a>
+                  <a href="#plan" class="btn btn-primary-gradient py-sm-3 px-4 px-sm-5 rounded-pill mt-3">Sign up</a>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <img class="img-fluid wow fadeInUp" data-wow-delay="0.5s" src="/assets/home/img/hero-2.png">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="feature">
+        <div class="container-xxl py-5">
+          <div class="container py-5 px-lg-5">
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+              <h5 class="text-primary-gradient fw-medium">API Features</h5>
+              <h1 class="text-white mb-5">Awesome features</h1>
+            </div>
+            <div class="row g-4">
+              <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="feature-item rounded p-4" style="background: #15191d;">
+                  <div class="d-inline-flex align-items-center justify-content-center bg-primary-gradient rounded-circle mb-4" style="width: 60px; height: 60px;">
+                    <i class="fa fa-download text-white fs-4"></i>
+                  </div>
+                  <h5 class="text-white mb-3">Downloader</h5>
+                  <p class="m-0">Downloader image (jpg or png), video (mp4), audio (mp3), and other files.</p>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="feature-item rounded p-4" style="background: #15191d;">
+                  <div class="d-inline-flex align-items-center justify-content-center bg-primary-gradient rounded-circle mb-4" style="width: 60px; height: 60px;">
+                    <i class="fa fa-search text-white fs-4"></i>
+                  </div>
+                  <h5 class="text-white mb-3">Searcher</h5>
+                  <p class="m-0">Searcher YouTube video, Stack overflow, Pinterest, Google Image, and other.</p>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                <div class="feature-item rounded p-4" style="background: #15191d;">
+                  <div class="d-inline-flex align-items-center justify-content-center bg-secondary-gradient rounded-circle mb-4" style="width: 60px; height: 60px;">
+                    <i class="fa fa-robot text-white fs-4"></i>
+                  </div>
+                  <h5 class="text-white mb-3">Artificial Intelligence (AI)</h5>
+                  <p class="m-0">OpenAI (ChatGPT 3 & 3.5, DALL-E 2), Anime filter, and other.</p>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
+                <div class="feature-item rounded p-4" style="background: #15191d;">
+                  <div class="d-inline-flex align-items-center justify-content-center bg-primary-gradient rounded-circle mb-4" style="width: 60px; height: 60px;">
+                    <i class="fa fa-images text-white fs-4"></i>
+                  </div>
+                  <h5 class="text-white mb-3">Random Image</h5>
+                  <p class="m-0">Random Image Anime SFW&NSFW, and other.</p>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.9s">
+                <div class="feature-item rounded p-4" style="background: #15191d;">
+                  <div class="d-inline-flex align-items-center justify-content-center bg-primary-gradient rounded-circle mb-4" style="width: 60px; height: 60px;">
+                    <i class="fa fa-tools text-white fs-4"></i>
+                  </div>
+                  <h5 class="text-white mb-3">Tools</h5>
+                  <p class="m-0">Tools TempMail, Screenshoot web, and other.</p>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="1.1s">
+                <div class="feature-item rounded p-4" style="background: #15191d;">
+                  <div class="d-inline-flex align-items-center justify-content-center bg-primary-gradient rounded-circle mb-4" style="width: 60px; height: 60px;">
+                    <i class="fa fa-question text-white fs-4"></i>
+                  </div>
+                  <h5 class="text-white mb-3">300+ other features</h5>
+                  <p class="m-0">300+ other features, Join to see all features.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="plan">
+        <div class="container-xxl py-5">
+          <div class="container py-5 px-lg-5">
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+              <h5 class="text-primary-gradient fw-medium">Plans & Pricing</h5>
+              <h1 class="text-white mb-5">Choose your plan</h1>
+            </div>
+            <div class="tab-class text-center plan wow fadeInUp" data-wow-delay="0.1s">
+              <ul class="nav nav-pills d-inline-flex justify-content-center bg-primary-gradient rounded-pill mb-5">
+                <li class="nav-item">
+                  <button class="nav-link bg-dark text-white active" data-bs-toggle="pill" href="#tab-1">Monthly</button>
+                </li>
+                <li class="nav-item">
+                  <button class="bg-dark text-white nav-link" data-bs-toggle="pill" href="#tab-2">Yearly</button>
+                </li>
+              </ul>
+              <div class="tab-content text-start">
+                <div id="tab-1" class="tab-pane fade show p-0 active">
+                  <div class="row g-4">
+
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                      <div class="rounded" style="background: #15191d;">
+                        <div class="border-bottom p-4 mb-4">
+                          <h4 class="text-primary-gradient mb-1">Free</h4>
+                          <span class="text-white">Free plan</span>
+                        </div>
+                        <div class="p-4 pt-0">
+                          <h1 class="text-white mb-3">
+                            <small class="align-top" style="font-size: 22px; line-height: 45px;">Rp. 0</small><small class="align-bottom" style="font-size: 16px; line-height: 40px;"></small>
+                          </h1>
+                          <div class="d-flex justify-content-between mb-3"><span>Usage limit 100/day</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Custom API key</span><i class="fa fa-fw fa-times text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Premium features</span><i class="fa fa-fw fa-times text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Without ads</span><i class="fa fa-fw fa-times text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Free script WhatsApp BOT</span><i class="fa fa-fw fa-times text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-2"><span>Expired -</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <a href="/auth/signup" class="btn btn-primary-gradient rounded-pill py-2 px-4 mt-4">Select plan</a>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                      <div class="rounded" style="background: #15191d;">
+                        <div class="border-bottom p-4 mb-4">
+                          <h4 class="text-primary-gradient mb-1">Basic</h4>
+                          <span class="text-white">Basic plan</span>
+                        </div>
+                        <div class="p-4 pt-0">
+                          <h1 class="text-white mb-3">
+                            <small class="align-top" style="font-size: 22px; line-height: 45px;"><%= web_set.body.plan.monthly.basic.price %></small><small class="align-bottom" style="font-size: 16px; line-height: 40px;">/ Month</small>
+                          </h1>
+                          <div class="d-flex justify-content-between mb-3"><span>Usage limit 1000/day</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Custom API key (Max edit: 3x)</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Premium features</span><i class="fa fa-fw fa-times text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Without ads</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Free script WhatsApp BOT</span><i class="fa fa-fw fa-times text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-2"><span>Expired 1 month</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <a href="<%= web_set.body.plan.monthly.basic.payment_url %>" class="btn btn-primary-gradient rounded-pill py-2 px-4 mt-4">Select plan</a>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                      <div class="rounded" style="background: #15191d;">
+                        <div class="border-bottom p-4 mb-4">
+                          <h4 class="text-primary-gradient mb-1">Standar</h4>
+                          <span class="text-white">Standar plan</span>
+                        </div>
+                        <div class="p-4 pt-0">
+                          <h1 class="text-white mb-3">
+                            <small class="align-top" style="font-size: 22px; line-height: 45px;"><%= web_set.body.plan.monthly.standard.price %></small><small class="align-bottom" style="font-size: 16px; line-height: 40px;">/ Month</small>
+                          </h1>
+                          <div class="d-flex justify-content-between mb-3"><span>Usage limit 5000/day</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Custom API key (Max edit: 5x)</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Premium features</span><i class="fa fa-fw fa-times text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Without ads</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Free script WhatsApp BOT</span><i class="fa fa-fw fa-times text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-2"><span>Expired 1 month</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <a href="<%= web_set.body.plan.monthly.standard.payment_url %>" class="btn btn-primary-gradient rounded-pill py-2 px-4 mt-4">Select plan</a>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
+                      <div class="rounded" style="background: #15191d;">
+                        <div class="border-bottom p-4 mb-4">
+                          <h4 class="text-primary-gradient mb-1">Premium</h4>
+                          <span class="text-white">Premium plan</span>
+                        </div>
+                        <div class="p-4 pt-0">
+                          <h1 class="text-white mb-3">
+                            <small class="align-top" style="font-size: 22px; line-height: 45px;"><%= web_set.body.plan.monthly.premium.price %></small><small class="align-bottom" style="font-size: 16px; line-height: 40px;">/ Month</small>
+                          </h1>
+                          <div class="d-flex justify-content-between mb-3"><span>Usage limit unlimited</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Custom API key (Max edit: 10x)</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Premium features</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Without ads</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Free script WhatsApp BOT</span><i class="fa fa-fw fa-times text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-2"><span>Expired 1 month</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <a href="<%= web_set.body.plan.monthly.premium.payment_url %>" class="btn btn-primary-gradient rounded-pill py-2 px-4 mt-4">Select plan</a>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.9s">
+                      <div class="rounded" style="background: #15191d;">
+                        <div class="border-bottom p-4 mb-4">
+                          <h4 class="text-primary-gradient mb-1">Enterprise</h4>
+                          <span class="text-white">Enterprise plan</span>
+                        </div>
+                        <div class="p-4 pt-0">
+                          <h1 class="text-white mb-3">
+                            <small class="align-top" style="font-size: 22px; line-height: 45px;"><%= web_set.body.plan.monthly.enterprise.price %></small><small class="align-bottom" style="font-size: 16px; line-height: 40px;">/ Month</small>
+                          </h1>
+                          <div class="d-flex justify-content-between mb-3"><span>Usage limit unlimited</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Custom API key (Max edit: Infinity)</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Premium features</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Without ads</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Free script WhatsApp BOT</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-2"><span>Expired 1 month</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <a href="<%= web_set.body.plan.monthly.enterprise.payment_url %>" class="btn btn-primary-gradient rounded-pill py-2 px-4 mt-4">Select plan</a>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="1.1s">
+                      <div class="rounded" style="background: #15191d;">
+                        <div class="border-bottom p-4 mb-0">
+                          <h4 class="text-primary-gradient mb-1">Custom</h4>
+                          <span class="text-white">Custom plan</span>
+                        </div>
+                        <div class="p-4 pt-0">
+                          <a href="<%= web_set.body.plan.monthly.custom.payment_url %>" class="btn btn-primary-gradient rounded-pill py-2 px-4 mt-4">Select plan</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div id="tab-2" class="tab-pane fade show p-0">
+                  <div class="row g-4">
+
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0s">
+                      <div class="rounded" style="background: #15191d;">
+                        <div class="border-bottom p-4 mb-4">
+                          <h4 class="text-primary-gradient mb-1">Free</h4>
+                          <span class="text-white">Free plan</span>
+                        </div>
+                        <div class="p-4 pt-0">
+                          <h1 class="text-white mb-3">
+                            <small class="align-top" style="font-size: 22px; line-height: 45px;">Rp. 0</small><small class="align-bottom" style="font-size: 16px; line-height: 40px;"></small>
+                          </h1>
+                          <div class="d-flex justify-content-between mb-3"><span>Usage limit 100/day</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Custom API key</span><i class="fa fa-fw fa-times text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Premium features</span><i class="fa fa-fw fa-times text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Without ads</span><i class="fa fa-fw fa-times text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Free script WhatsApp BOT</span><i class="fa fa-fw fa-times text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-2"><span>Expired -</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <a href="/auth/signup" class="btn btn-primary-gradient rounded-pill py-2 px-4 mt-4">Select plan</a>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0s">
+                      <div class="rounded" style="background: #15191d;">
+                        <div class="border-bottom p-4 mb-4">
+                          <h4 class="text-primary-gradient mb-1">Basic</h4>
+                          <span class="text-white">Basic plan</span>
+                        </div>
+                        <div class="p-4 pt-0">
+                          <h1 class="text-white mb-3">
+                            <small class="align-top" style="font-size: 22px; line-height: 45px;"><%= web_set.body.plan.yearly.basic.price %></small><small class="align-bottom" style="font-size: 16px; line-height: 40px;">/ Year</small>
+                          </h1>
+                          <div class="d-flex justify-content-between mb-3"><span>Usage limit 1000/day</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Custom API key (Max edit: 3x)</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Premium features</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Without ads</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Free script WhatsApp BOT</span><i class="fa fa-fw fa-times text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-2"><span>Expired 1 year</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <a href="<%= web_set.body.plan.yearly.basic.payment_url %>" class="btn btn-primary-gradient rounded-pill py-2 px-4 mt-4">Select plan</a>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0s">
+                      <div class="rounded" style="background: #15191d;">
+                        <div class="border-bottom p-4 mb-4">
+                          <h4 class="text-primary-gradient mb-1">Standar</h4>
+                          <span class="text-white">Standar plan</span>
+                        </div>
+                        <div class="p-4 pt-0">
+                          <h1 class="text-white mb-3">
+                            <small class="align-top" style="font-size: 22px; line-height: 45px;"><%= web_set.body.plan.yearly.standard.price %></small><small class="align-bottom" style="font-size: 16px; line-height: 40px;">/ Year</small>
+                          </h1>
+                          <div class="d-flex justify-content-between mb-3"><span>Usage limit 5000/day</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Custom API key (Max edit: 5x)</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Premium features</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Without ads</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Free script WhatsApp BOT</span><i class="fa fa-fw fa-times text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-2"><span>Expired 1 year</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <a href="<%= web_set.body.plan.yearly.standard.payment_url %>" class="btn btn-primary-gradient rounded-pill py-2 px-4 mt-4">Select plan</a>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0s">
+                      <div class="rounded" style="background: #15191d;">
+                        <div class="border-bottom p-4 mb-4">
+                          <h4 class="text-primary-gradient mb-1">Premium</h4>
+                          <span class="text-white">Premium plan</span>
+                        </div>
+                        <div class="p-4 pt-0">
+                          <h1 class="text-white mb-3">
+                            <small class="align-top" style="font-size: 22px; line-height: 45px;"><%= web_set.body.plan.yearly.premium.price %></small><small class="align-bottom" style="font-size: 16px; line-height: 40px;">/ Year</small>
+                          </h1>
+                          <div class="d-flex justify-content-between mb-3"><span>Usage limit unlimited</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Custom API key (Max edit: 10x)</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Premium features</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Without ads</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Free script WhatsApp BOT</span><i class="fa fa-fw fa-times text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-2"><span>Expired 1 year</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <a href="<%= web_set.body.plan.yearly.premium.payment_url %>" class="btn btn-primary-gradient rounded-pill py-2 px-4 mt-4">Select plan</a>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0s">
+                      <div class="rounded" style="background: #15191d;">
+                        <div class="border-bottom p-4 mb-4">
+                          <h4 class="text-primary-gradient mb-1">Enterprise</h4>
+                          <span class="text-white">Enterprise plan</span>
+                        </div>
+                        <div class="p-4 pt-0">
+                          <h1 class="text-white mb-3">
+                            <small class="align-top" style="font-size: 22px; line-height: 45px;"><%= web_set.body.plan.yearly.enterprise.price %></small><small class="align-bottom" style="font-size: 16px; line-height: 40px;">/ Year</small>
+                          </h1>
+                          <div class="d-flex justify-content-between mb-3"><span>Usage limit unlimited</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Custom API key (Max edit: Infinity)</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Premium features</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Without ads</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-3"><span>Free script WhatsApp BOT</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <div class="d-flex justify-content-between mb-2"><span>Expired 1 year</span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                          <a href="<%= web_set.body.plan.yearly.enterprise.payment_url %>" class="btn btn-primary-gradient rounded-pill py-2 px-4 mt-4">Select plan</a>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0s">
+                      <div class="rounded" style="background: #15191d;">
+                        <div class="border-bottom p-4 mb-0">
+                          <h4 class="text-primary-gradient mb-1">Custom</h4>
+                          <span class="text-white">Custom plan</span>
+                        </div>
+                        <div class="p-4 pt-0">
+                          <a href="<%= web_set.body.plan.yearly.custom.payment_url %>" class="btn btn-primary-gradient rounded-pill py-2 px-4 mt-4">Select plan</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer id="footer">
+      <div class="container-fluid bg-primary-gradient text-light footer wow fadeIn" data-wow-delay="0.1s">
+        <div class="container py-5 px-lg-5">
+          <h4 class="text-white mb-4">About Us</h4>
+          <p class="text-white mb-4"><%= web_set.body.header.name %> adalah mitra terpercaya yang menghadirkan solusi API inovatif untuk berbagai kebutuhan Anda. Dari layanan RESTful API yang andal hingga integrasi yang interaktif dengan bot WhatsApp, kami menghubungkan teknologi Anda dengan ekosistem yang lebih luas. Kami mengutamakan kehandalan, kinerja, dan fleksibilitas dalam setiap solusi yang kami tawarkan. Jadilah bagian dari perjalanan teknologi kami dan temukan cara baru untuk meraih potensi penuh teknologi Anda melalui layanan API terbaik yang dapat disesuaikan sesuai kebutuhan Anda.</p>
+          <div class="row g-5" id="contact">
+            <div class="col-md-6 col-lg-3">
+              <h4 class="text-white mb-4">Contact</h4>
+              <p><i class="fa fa-map-marker-alt me-2"></i><%= web_set.body.footer.contact.address %></p>
+              <p><i class="fa fa-phone-alt me-2"></i><%= web_set.body.footer.contact.phone_number %></p>
+              <p><i class="fa fa-envelope me-2"></i><%= web_set.body.footer.contact.email_address %></p>
+              <div class="d-flex pt-2">
+                <a class="btn btn-outline-light btn-social" href="https://tiktok.com/@nklsgns"><i class="fab fa-youtube"></i></a>
+                <a class="btn btn-outline-light btn-social" href="https://youtube.com/@nekell1337"><i class="fab fa-tiktok"></i></a>
+                <a class="btn btn-outline-light btn-social" href="https://instagram.com/nekell1337_"><i class="fab fa-instagram"></i></a>
+                <a class="btn btn-outline-light btn-social" href="https://linkedin.com/in/nklsgns"><i class="fab fa-linkedin-in"></i></a>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+              <h4 class="text-white mb-4">Quick Link</h4>
+              <a class="btn btn-link" href="#">About Us</a>
+              <a class="btn btn-link" href="#">Contact Us</a>
+              <a class="btn btn-link" href="#">Privacy Policy</a>
+              <a class="btn btn-link" href="#">Terms & Condition</a>
+              <a class="btn btn-link" href="#">Career</a>
+            </div>
+            <div class="col-md-6 col-lg-3">
+              <h4 class="text-white mb-4">Popular Link</h4>
+              <a class="btn btn-link" href="#">About Us</a>
+              <a class="btn btn-link" href="#">Contact Us</a>
+              <a class="btn btn-link" href="#">Privacy Policy</a>
+              <a class="btn btn-link" href="#">Terms & Condition</a>
+              <a class="btn btn-link" href="#">Career</a>
+            </div>
+          </div>
+        </div>
+        <div class="container px-lg-5">
+          <div class="copyright">
+            <div class="row">
+              <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                Copyright &copy; 2023 <a class="border-bottom" href="#"><%= web_set.body.header.name %></a>, All Right Reserved.
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <a href="#home" class="btn btn-lg btn-lg-square btn-back-to-top pt-2 text-white">&UpArrow;</a>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/assets/home/lib/wow/wow.min.js"></script>
+  <script src="/assets/home/lib/easing/easing.min.js"></script>
+  <script src="/assets/home/lib/waypoints/waypoints.min.js"></script>
+  <script src="/assets/home/lib/counterup/counterup.min.js"></script>
+  <script src="/assets/home/lib/owlcarousel/owl.carousel.min.js"></script>
+  <script src="/assets/home/js/main.js"></script>
+  <script src="/assets/js/poll-data-and-display.js"></script>
+</body>
+
+</html>

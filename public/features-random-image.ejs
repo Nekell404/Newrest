@@ -1,0 +1,3038 @@
+<!DOCTYPE html>
+<html :class="{ 'theme-dark': dark }" x-data="data()" lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="<%= web_set.head.description %>">
+  <meta name="author" content="<%= web_set.head.author %>">
+  <meta name="keywords" content="<%= web_set.head.keywords %>">
+  <meta property="og:site_name" content="<%= web_set.head.site_name %>">
+  <meta property="og:title" content="Random Image - <%= web_set.head.title %>">
+  <meta property="og:url" content="<%= web_set.head.domain %>">
+  <meta property="og:image" content="<%= web_set.head.image %>">
+  <meta property="og:image:type" content="<%= web_set.head.image_type %>">
+  <meta property="og:image:alt" content="<%= web_set.head.image_alt %>">
+  <meta property="og:description" content="<%= web_set.head.description %>">
+  <title>Random Image - <%= web_set.head.title %></title>
+  <link rel="shortcut icon" type="image/png" href="<%= web_set.head.favicon %>">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.Tryogleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css">
+  <link rel="stylesheet" href="/assets/css/tailwind.output.css">
+  <link rel="stylesheet" href="/assets/css/table.css">
+
+  <!- Mondiad area ->
+    <meta name="mnd-ver" content="<%= web_set.ads.verify %>" />
+    <script async src="https://ss.mndsrv.com/banner.js"></script>
+    <script async src="https://ss.mndsrv.com/native.js"></script>
+</head>
+
+<body class="overflow-y-auto p-4 bg-gray-100 text-dark dark:bg-gray-900 dark:text-white">
+  <div class="flex h-screen">
+    <div class="container mx-auto">
+
+      <% if (advertising_for_free_users) { %>
+      <% if (user.account_type === "Free") { %>
+      <div align="center" style="margin-top: 9rem; margin-bottom: 2em;">
+        <div data-mndazid="<%= web_set.ads.ads_area.native %>"></div>
+      </div>
+      <% } else { %>
+      <div style="margin-bottom: 9rem;"></div>
+      <% } %>
+      <% } %>
+
+      <div class="nav bg-gray-50 text-dark dark:bg-gray-900 dark:text-white">
+        <div class="flex justify-between items-center mb-4">
+          <h1 class="text-lg font-bold text-gray-900 dark:text-white"><a href="/dashboard" class="mr-2">&LeftArrow;</a> Random Image Features</h1>
+          <button class="rounded-md focus:outline-none focus:shadow-outline-purple" @click="toggleTheme" aria-label="Toggle color mode">
+            <template x-if="!dark">
+              <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+              </svg>
+            </template>
+            <template x-if="dark">
+              <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+              </svg>
+            </template>
+          </button>
+        </div>
+
+        <div class="mb-4">
+          <div class="relative">
+            <i class="fas fa-search absolute top-3 left-3 text-gray-400"></i>
+            <input type="search" id="searchInput" placeholder="Search..." class="w-full pl-10 pr-4 py-2 rounded-lg border focus:outline-none focus:ring focus:border-blue-300 dark:bg-gray-700 dark:text-white" onkeyup="searchData()">
+          </div>
+        </div>
+        <div class="flex">
+          <p>Dosa (NSFW) ditanggung pengguna. Agree?&nbsp;</p>
+          <input type="checkbox" id="checkbox" checked="true">&nbsp;I agree!
+        </div>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table id="dataTable" class="min-w-full table-fixed rounded-lg mb-6 bg-white text-gray-900 dark:bg-gray-800 dark:text-white">
+          <thead>
+            <tr>
+              <th class="px-6 py-3 border-b-2 border-gray-300 dark:border-gray-600 text-left text-sm leading-4 tracking-wider">
+                Name <i class="sort-icon fas fa-sort"></i>
+              </th>
+              <th class="px-6 py-3 border-b-2 border-gray-300 dark:border-gray-600 text-left text-sm leading-4 tracking-wider">
+                Description <i class="sort-icon fas fa-sort"></i>
+              </th>
+              <th class="px-6 py-3 border-b-2 border-gray-300 dark:border-gray-600 text-left text-sm leading-4 tracking-wider">
+                Method <i class="sort-icon fas fa-sort"></i>
+              </th>
+              <th class="px-6 py-3 border-b-2 border-gray-300 dark:border-gray-600 text-left text-sm leading-4 tracking-wider">
+                Type <i class="sort-icon fas fa-sort"></i>
+              </th>
+              <th class="px-6 py-3 border-b-2 border-gray-300 dark:border-gray-600 text-left text-sm leading-4 tracking-wider">
+                Query Parameters <i class="sort-icon fas fa-sort"></i>
+              </th>
+              <th class="px-6 py-3 border-b-2 border-gray-300 dark:border-gray-600 text-left text-sm leading-4 tracking-wider">
+                Status <i class="sort-icon fas fa-sort"></i>
+              </th>
+              <th class="px-6 py-3 border-b-2 border-gray-300 dark:border-gray-600 text-left text-sm leading-4 tracking-wider">
+                Action <i class="sort-icon fas fa-sort"></i>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Anime (NSFW) Ahegao
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                IMAGE
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button onclick="location.href = '/api/random-image/anime-nsfw-ahegao?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Anime (NSFW) Ass
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                IMAGE
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button onclick="location.href = '/api/random-image/anime-nsfw-ass?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Anime (NSFW) Bdsm
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                IMAGE
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button onclick="location.href = '/api/random-image/anime-nsfw-bdsm?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Anime (NSFW) Blowjob
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                IMAGE
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button onclick="location.href = '/api/random-image/anime-nsfw-blowjob?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Anime (NSFW) Cuckold
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                IMAGE
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button onclick="location.href = '/api/random-image/anime-nsfw-cuckold?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Anime (NSFW) Cum
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                IMAGE
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button onclick="location.href = '/api/random-image/anime-nsfw-cum?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Anime (NSFW) Eba
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                IMAGE
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button onclick="location.href = '/api/random-image/anime-nsfw-eba?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Anime (NSFW) Ero
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                IMAGE
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button onclick="location.href = '/api/random-image/anime-nsfw-ero?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Anime (NSFW) Femdom
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                IMAGE
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button onclick="location.href = '/api/random-image/anime-nsfw-femdom?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Anime (NSFW) Foot
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                IMAGE
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button onclick="location.href = '/api/random-image/anime-nsfw-foot?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Anime (NSFW) Gangbang
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                IMAGE
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button onclick="location.href = '/api/random-image/anime-nsfw-gangbang?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Anime (NSFW) Gifs
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                IMAGE
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button onclick="location.href = '/api/random-image/anime-nsfw-gifs?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Anime (NSFW) Glasses
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                IMAGE
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button onclick="location.href = '/api/random-image/anime-nsfw-glasses?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Anime (NSFW) Hentai
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                IMAGE
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button onclick="location.href = '/api/random-image/anime-nsfw-hentai?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Anime (NSFW) Jahy
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                IMAGE
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button onclick="location.href = '/api/random-image/anime-nsfw-jahy?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Anime (NSFW) Manga
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                IMAGE
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button onclick="location.href = '/api/random-image/anime-nsfw-manga?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Anime (NSFW) Masturbation
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                IMAGE
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button onclick="location.href = '/api/random-image/anime-nsfw-masturbation?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Anime (NSFW) Megumin
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                IMAGE
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button onclick="location.href = '/api/random-image/anime-nsfw-megumin?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Anime (NSFW) Neko
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                IMAGE
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button onclick="location.href = '/api/random-image/anime-nsfw-neko?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Anime (NSFW) Nekonime
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                IMAGE
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button onclick="location.href = '/api/random-image/anime-nsfw-nekonime?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Anime (NSFW) Loli
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                IMAGE
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button onclick="location.href = '/api/random-image/anime-nsfw-loli?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Anime (NSFW) Orgy
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                IMAGE
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button onclick="location.href = '/api/random-image/anime-nsfw-orgy?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Anime (NSFW) Panties
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                IMAGE
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button onclick="location.href = '/api/random-image/anime-nsfw-panties?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Anime (NSFW) Pussy
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                IMAGE
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button onclick="location.href = '/api/random-image/anime-nsfw-pussy?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Anime (NSFW) Tentacles
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                IMAGE
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button onclick="location.href = '/api/random-image/anime-nsfw-tentacles?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Anime (NSFW) Thighs
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                IMAGE
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button onclick="location.href = '/api/random-image/anime-nsfw-thighs?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Anime (NSFW) Yuri
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                IMAGE
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button onclick="location.href = '/api/random-image/anime-nsfw-yuri?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                Anime (NSFW) Zettai
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                -
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                GET
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                IMAGE
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                api_key
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                Active
+              </td>
+              <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                <div class="flex items-center space-x-4">
+                  <button onclick="location.href = '/api/random-image/anime-nsfw-zettai?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Try
+                  </button>
+                  <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Read docs
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <!- ->
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Akira
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-akira?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Asuna
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-asuna?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Ana
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-ana?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Akiyama
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-akiyama?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Ayuzawa
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-ayuzawa?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Boruto
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-boruto?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Chitanda
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-chitanda?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Chitoge
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-chitoge?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Cosplay
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-cosplay?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Deidara
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-deidara?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Doraemon
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-doraemon?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Alaina
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-elaina?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Emilia
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-emilia?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Erza
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-erza?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Fanart
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-fanart?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Genshin
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-genshin?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Gremory
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-gremory?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Hestia
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-hestia?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Husbu
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-husbu?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Waifu
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-waifu?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Icon
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-icon?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Inori
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-inori?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Itori
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-itori?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Isuzu
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-isuzu?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Itachi
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-itachi?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Kaga
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-kaga?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Kagura
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-kagura?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Kaguya
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-kaguya?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Kakasih
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-kakasih?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Kaneki
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-kaneki?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Keneki
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-keneki?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Kaori
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-kaori?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Kotori
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-kotori?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Kosaki
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-kosaki?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Kuriyama
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-kuriyama?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Kuroha
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-kuroha?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Kurumi
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-kurumi?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Loli
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-loli?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Madara
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-madara?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Menus
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-menus?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Mikasa
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-mikasa?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Miku
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-miku?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Minato
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-minato?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Naruto
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-naruto?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Natsukawa
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-natsukawa?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Neko
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-neko?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Nekonime
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-nekonime?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Nezuko
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-nezuko?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Nishimiya
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-nishimiya?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Onepiece
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-onepiece?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Pokemon
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-pokemon?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Rem
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-rem?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Rize
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-rize?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Sagiri
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-sagiri?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Sakura
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-sakura?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Sasuke
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-sasuke?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Shina
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-shina?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Shinka
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-shinka?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Shizuka
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-shizuka?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Shota
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-shota?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Simp
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-simp?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Tomori
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-tomori?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Toukachan
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-toukachan?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Tsunade
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-tsunade?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Yatogami
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-yatogami?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  Anime (SFW) Yuki
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  -
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400">
+                  GET
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  IMAGE
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  api_key
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600 text-green-400 font-semibold">
+                  Active
+                </td>
+                <td class="px-6 py-4 border-b border-gray-300 dark:border-gray-600">
+                  <div class="flex items-center space-x-4">
+                    <button onclick="location.href = '/api/random-image/anime-sfw-yuki?api_key=<%= user.api_key %>';" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                      Try
+                    </button>
+                    <button onclick="location.href = '/documentation';" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                      Read docs
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+          </tbody>
+        </table>
+      </div>
+      <p id="notFoundMessage" class="text-red-500 mt-2 hidden">
+        Not found.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('checkbox').addEventListener('click', function() {
+      this.checked = true;
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
+  <script src="/assets/js/init-alpine.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/table.js"></script>
+</body>
+
+</html>
