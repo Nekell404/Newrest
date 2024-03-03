@@ -6,8 +6,6 @@ const {
 } = require('util');
 const writeFileAsync = promisify(fs.writeFile);
 const path = require('path');
-const daniScraper = require('@danitech/scraper');
-const daniCodingScraper = require('@danicoding/scraper');
 const {
   savefrom,
   wikipedia,
